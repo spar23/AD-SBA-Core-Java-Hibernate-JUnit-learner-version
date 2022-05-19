@@ -1,5 +1,7 @@
 package sba.sms;
 
+import java.util.*;
+import java.lang.*;
 import lombok.extern.java.Log;
 import sba.sms.models.Course;
 import sba.sms.models.Student;
@@ -7,8 +9,7 @@ import sba.sms.services.CourseService;
 import sba.sms.services.StudentService;
 import sba.sms.utils.CommandLine;
 
-import java.util.List;
-import java.util.Scanner;
+
 
 /**
  * SBA Core Java Hibernate/Junit

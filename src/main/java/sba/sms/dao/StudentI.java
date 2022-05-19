@@ -3,7 +3,7 @@ package sba.sms.dao;
 import sba.sms.models.Course;
 import sba.sms.models.Student;
 
-import java.util.List;
+import java.util.*;
 
 public interface StudentI {
     List<Student> getAllStudents();

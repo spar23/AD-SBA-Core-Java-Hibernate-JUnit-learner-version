@@ -44,7 +44,7 @@ public class StudentService implements StudentI {
         try {
             Student student = s.get(Student.class, email);
             if(student == null)
-                throw new HibernateException("Did not find Student");
+                throw new HibernateException("Did not find the Student");
             else
                 return student;
 
@@ -71,22 +71,30 @@ public class StudentService implements StudentI {
     @Override
     public void registerStudentToCourse(String email, int courseId) {
         //get the student by email
-        Student student = getStudentByEmail(email);
+
         //get course by courseId
-        CourseService cs = new CourseService();
-        Course course = cs.getCourseById(courseId);
+
         //add student to the course
         Session s = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = null;
         try{
+//            student from detached to transient
+            Student student = s.get(Student.class, email);
+            if(student == null)
+                throw new HibernateException("Did not find the Student");
+            Course course = s.get(Course.class, courseId);
+            if (course == null)
+                throw new HibernateException("Did not find the course");
+            if(student.getCourses().contains(course))
+                throw new HibernateException("Duplicate course");
             tx = s.beginTransaction();
             course.getStudents().add(student);
             student.getCourses().add(course);
-            s.save(student);
-            s.save(course);
+            s.persist(student);
+            s.persist(course);
             tx.commit();
         } catch (HibernateException exception){
-            exception.printStackTrace();
+            System.out.println(exception.getMessage());
             if(tx!=null) tx.rollback();
         } finally {
             s.close();

@@ -20,7 +20,8 @@
         <!-- each session runs in a thread (thread-safe) -->
         <property name="current_session_context_class">thread</property>
 
-
+        <mapping class="sba.sms.models.Student"/>
+        <mapping class="sba.sms.models.Course"/>
 
 
 

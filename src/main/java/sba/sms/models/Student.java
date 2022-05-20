@@ -33,11 +33,38 @@ public class Student {
     }
 
 
-
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+//    @EqualsAndHashCode.Exclude
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.EAGER)
     @JoinTable(name = "student_courses",
             joinColumns = @JoinColumn(name = "student_email"),
             inverseJoinColumns = @JoinColumn(name = "course_id"))
     List<Course> courses = new ArrayList<>();
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+
+        if (obj.getClass() != this.getClass()) {
+            return false;
+        }
+
+        final Student other = (Student) obj;
+        if (!this.name.equals(other.name)) {
+            return false;
+        }
+
+        if (!this.email.equals(other.email)) {
+            return false;
+        }
+        if (!this.password.equals(other.password)) {
+            return false;
+        }
+
+        return true;
+    }
+
+
 }
+
